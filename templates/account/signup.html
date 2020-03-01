@@ -1,8 +1,10 @@
 {% extends '_base.html' %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 
+{% load static %}
 {% block content %}
-    <div class="container">
+    <div class="container py-5">
     <div class="row">
       <div class="col"></div>
       <div class="col-5">
@@ -13,6 +15,24 @@
             <button class="btn btn-success" type="submit">Sign Up</button>
           </form>
         </p>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="mb-4">
+                <!-- Gradient divider -->
+                <hr data-content="or connect with" class="hr-text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-5 text-center">
+        <a href="{% provider_login_url 'google' %}">
+          <img class="social-account-logo" src="{% static 'images/google_logo.svg' %}"></img>
+        </a>
+        <img class="social-account-logo" src="{% static 'images/facebook_logo.svg' %}"></img>
       </div>
       <div class="col"></div>
     </div>
