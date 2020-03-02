@@ -30,7 +30,12 @@ hr.hr-text {
       transform: translate(-50%, -50%);
   }
 
-  .social-account-logo{
-      max-width: 10%;
-      height: auto;
-  }
+.social-account-logo{
+    max-width: 10%;
+    height: auto;
+}
+
+.user-profile{
+    width: 300px;
+    height: 300px;
+}

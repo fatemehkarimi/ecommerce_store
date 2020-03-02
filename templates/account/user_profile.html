@@ -1,0 +1,96 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}User Profile{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-4">
+        {% if profile.profile_img %}
+          <img class="user-profile" src="{{ profile.profile_img.url }}"/>
+        {% else %}
+          <img class="user-profile" src="{% static 'images/NoProfilePic.png' %}"/>
+        {% endif %}
+      </div>
+      <div class="col-12 col-md-8">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>First Name:</td>
+              <td>{{ user.first_name }}</td>
+              <td>Last Name:</td>
+              <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+              <td>Phone Number:</td>
+              <td>
+                {% if profile.phone_number %}
+                  {{ profile.phone_number }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>Birth Date:</td>
+              <td>{{ profile.birth_date }}</td>
+            </tr>
+            <tr>
+              <td>Email Address:</td>
+              <td>{{ user.email }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <br/>
+        <div class="float-right">
+          <a class="btn btn-outline-success" href="#">Edit your profile</a>
+        </div>
+        <br/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col">
+              <div class="p-2 mb-2 bg-light text-dark">
+                <a class="text-dark" href="#">Adresses</a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col">
+              <div class="p-2 mb-2 bg-light text-dark">
+                <a class="text-dark" href="#">Favorites</a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col">
+              <div class="p-2 mb-2 bg-light text-dark">
+                <a class="text-dark" href="#">Orders</a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col">
+              <div class="p-2 mb-2 bg-light text-dark">
+                <a class="text-dark" href="#">Log Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+      </div>
+    </div>
+  </div>
+{% endblock content %}

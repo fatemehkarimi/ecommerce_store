@@ -31,7 +31,7 @@
         <a class="nav-link" href="{% url 'account_login' %}">Login <span class="sr-only">(current)</span></a>
         <a class="nav-link" href="{% url 'account_signup' %}">Sign Up <span class="sr-only">(current)</span></a>
       {% else %}
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{% url 'user_profile' user.pk %}">
           <img class= "nav-bar-icon" src="{% static 'images/user.png' %}"></img>
           <span class="sr-only">(current)</span>
         </a>
@@ -42,6 +42,7 @@
     </div>
   </nav>
   </header>
+  <br/>
   <div class="container">
     {% block content %}
     {% endblock content %}
