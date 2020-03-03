@@ -6,6 +6,8 @@
   <title>{% block title %}Grocery{% endblock title %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
@@ -19,8 +21,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Categories <span class="sr-only">(current)</span></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href='#' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu multi-level" role="menu" aria-labeledby="dropdownMenu">
+            {% for cat in categories %}
+              <li class="dropdown-submenu">
+                <a class="dropdown-item" tabindex="-1" href="#">{{ cat.category_name }}</a>
+                <ul class="dropdown-menu">
+                  {% for subcat in subcategories %}
+                    {% if subcat.parent_category.category_name == cat.category_name %}
+                      <li class="dropdown-item">
+                        <a tabindex="-1" href="#">{{ subcat.subcategory_name }}</a>
+                    </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              <li>
+            {% endfor %}
+          </ul>
         </li>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search In Grocery..." aria-label="Search">
