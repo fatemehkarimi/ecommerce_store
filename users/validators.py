@@ -10,5 +10,6 @@ PHONE_REGEX = RegexValidator(
 
 def profile_pic_size_limit(value):
     limit = 2 * 1024 * 1024
+    message='Image is too large. Size should not exceed 2MB.'
     if value.size > limit:
         raise ValidationError('Image is too large. Size should not exceed 2MB.')
