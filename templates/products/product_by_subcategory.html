@@ -1,0 +1,29 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+    {% for product in products_by_subcat %}
+      <div class="col-md-4">
+          <div class="card text-center">
+            <img class="card-img-top" src="{{ product.product_img1.url }}">
+              <div class="card-body">
+                <h7 class="card-title">
+                  <a href="#" class="text-dark">{{ product.product_name }}</a>
+                </h7>
+              </div>
+              <div class="card-footer">
+                <div class="float-center">
+                  <label href="#" class="text-dark">{{ product.price_per_unit }} Toman</label>
+                  <br>
+                  <a class="btn btn-success btn-block" href="#">Add to the cart</a>
+                </div>
+              </div>
+          </div>
+          <br>
+        </div>
+    {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
