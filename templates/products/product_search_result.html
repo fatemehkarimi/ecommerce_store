@@ -1,10 +1,12 @@
 {% extends '_base.html' %}
 {% load static %}
 
+{% block title %}Showing Search Result{% endblock title %}
+
 {% block content %}
   <div class="container">
     <div class="row">
-    {% for product in products_by_subcat %}
+    {% for product in matched_products %}
       <div class="col-md-4">
           <div class="card text-center">
             <a href="{% url 'product_detail' product.pk %}"><img class="card-img-top" src="{{ product.product_img1.url }}"></a>

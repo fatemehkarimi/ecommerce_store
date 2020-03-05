@@ -1,0 +1,76 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <img class="img-fluid" src="{{ object.product_img1.url }}">
+      </div>
+      <div class="col">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h3>{{ object.product_name }}</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Brand:</label>
+              <a href="#" class="text-decoration-none text-info">{{ object.brand.brand_name }}</a>
+            </div>
+            <div class="col-7">
+              <label>Category: </label>
+              <a href="#" class="text-decoration-none text-info">{{ object.subcategory.subcategory_name }}</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div>
+                <h1 class="display-3 text-danger" style="display:inline">{{ object.price_per_unit }}</h1>
+                <h6 class="text-danger" style="display:inline">Toman</h6>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-success float-right btn-lg">Add to the Card</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h4>Product Details</h4>
+            <hr>
+          </div>
+        </div>
+        {% if not object.is_countable %}
+          <div class="row">
+            <div class="col bg-light text-dark">
+              <h9>Amount</h9>
+            </div>
+            <div class="col-9 bg-light text-dark">
+              <p>{{ uncountable_product_info.amount }} {{ uncountable_product_info.unit }}</p>
+            </div>
+          </div>
+        {% endif %}
+        {% if object.product_description %}
+          <div class="row">
+            <div class="col bg-light text-dark">
+              <h9>Product Description</h9>
+            </div>
+            <div class="col-9 bg-light text-dark">
+              <p>{{ object.product_description|linebreaks }}</p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
