@@ -1,0 +1,68 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load tags %}
+{% block title %}Addresses{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="thumbnail">
+                <img class="img-responsive" style="width:100%" src="{% get_user_profile request %}">
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <div class="container">
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="{% url 'user_profile' user.pk %}">Profile</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="{% url 'user_addresses' %}">Addresses</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="#">Favorites</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="#">Orders</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="{% url 'account_logout' %}">Log Out</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+      {% block profile_content %}
+      {% endblock profile_content %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

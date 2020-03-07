@@ -1,96 +1,18 @@
-{% extends '_base.html' %}
+{% extends '_base_profile.html' %}
 {% load static %}
 {% block title %}User Profile{% endblock title %}
 
-{% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-6 col-md-4">
-        {% if profile.profile_img %}
-          <img class="img-fluid" src="{{ profile.profile_img.url }}"/>
-        {% else %}
-          <img class="img-fluid" src="{% static 'images/NoProfilePic.png' %}"/>
-        {% endif %}
-      </div>
-      <div class="col-12 col-md-8">
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>First Name:</td>
-              <td>{{ user.first_name }}</td>
-              <td>Last Name:</td>
-              <td>{{ user.last_name }}</td>
-            </tr>
-            <tr>
-              <td>Phone Number:</td>
-              <td>
-                {% if profile.phone_number %}
-                  {{ profile.phone_number }}
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td>Birth Date:</td>
-              <td>{{ profile.birth_date }}</td>
-            </tr>
-            <tr>
-              <td>Email Address:</td>
-              <td>{{ user.email }}</td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <br/>
-        <div class="float-right">
-          <a class="btn btn-outline-success" href="{% url 'profile_edit' user.pk %}">Edit your profile</a>
-        </div>
-        <br/>
-      </div>
+{% block profile_content %}
+  <div class="card">
+    <div class="card-header">
+      User Info
     </div>
-    <div class="row">
-      <div class="col-6 col-md-4">
-        <br/>
-        <div class="container">
-          <div class="row bg-light">
-            <div class="col-xs-12">
-              <div class="p-2">
-                <a class="text-decoration-none text-dark" href="{% url 'user_profile' user.pk %}">Profile</a>
-              </div>
-            </div>
-          </div>
-          <div class="row bg-light">
-            <div class="col-xs-12">
-              <div class="p-2">
-                <a class="text-decoration-none text-dark" href="{% url 'user_addresses' %}">Adresses</a>
-              </div>
-            </div>
-          </div>
-          <div class="row bg-light">
-            <div class="col-xs-12">
-              <div class="p-2">
-                <a class="text-decoration-none text-dark" href="#">Favorites</a>
-              </div>
-            </div>
-          </div>
-          <div class="row bg-light">
-            <div class="col-xs-12">
-              <div class="p-2">
-                <a class="text-decoration-none text-dark" href="#">Orders</a>
-              </div>
-            </div>
-          </div>
-          <div class="row bg-light">
-            <div class="col-xs-12">
-              <div class="p-2">
-                <a class="text-decoration-none text-dark" href="{% url 'account_logout' %}">Log Out</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-8">
-      </div>
+    <div class="card-body">
+      <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+      <p>Email: {{ user.email }}</p>
+      <p>Birth Date: {{ profile.birth_date }}</p>
+      <p>Phone Number: {{ profile.phone_number }}</p>
+      <a class="text-decoration-none btn text-warning" style="display:inline" href="{% url 'profile_edit' user.pk %}">Edit</a>
     </div>
   </div>
-{% endblock content %}
+{% endblock profile_content %}

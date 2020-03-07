@@ -4,13 +4,15 @@ from django.views import View
 from django.views.generic import CreateView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.template.response import TemplateResponse
 
 from .models import UserProfile, UserAddress
 from .forms import EditProfileForm
 # Create your views here.
 
-class UserProfileView(View):
+class UserProfileView(LoginRequiredMixin, View):
     template_name = 'account/user_profile.html'
+    login_url = 'account_login'
 
     def get(self, request, *args, **kwargs):
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
@@ -19,7 +21,8 @@ class UserProfileView(View):
             'user': self.request.user
         }
         return render(request, self.template_name, context)
-    
+
+
 class EditProfileView(UpdateView):
     model = UserProfile
     form_class = EditProfileForm
@@ -53,3 +56,10 @@ class AddressListView(LoginRequiredMixin, ListView):
 class AddressDeleteView(DeleteView):
     model = UserAddress
     success_url = reverse_lazy('user_addresses')
+
+
+class AddressUpdateView(UpdateView):
+    model = UserAddress
+    fields = ('city', 'adress', 'zip_code',)
+    success_url = reverse_lazy('user_addresses')
+    template_name = 'account/update_address.html'

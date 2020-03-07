@@ -5,6 +5,7 @@ from .views import (
     AddNewAddressView,
     AddressListView,
     AddressDeleteView,
+    AddressUpdateView,
 )
 
 urlpatterns = [
@@ -18,4 +19,6 @@ urlpatterns = [
         AddressListView.as_view(), name='user_addresses'),
     path('user/delete/address/<int:pk>/',
         AddressDeleteView.as_view(), name='delete_address'),
+    path('user/edit/address/<int:pk>/',
+        AddressUpdateView.as_view(), name='edit_address')
 ]
