@@ -55,28 +55,35 @@
           <div class="row bg-light">
             <div class="col-xs-12">
               <div class="p-2">
-                <a class="text-dark" href="#">Adresses</a>
+                <a class="text-decoration-none text-dark" href="{% url 'user_profile' user.pk %}">Profile</a>
               </div>
             </div>
           </div>
           <div class="row bg-light">
             <div class="col-xs-12">
               <div class="p-2">
-                <a class="text-dark" href="#">Favorites</a>
+                <a class="text-decoration-none text-dark" href="{% url 'user_addresses' %}">Adresses</a>
               </div>
             </div>
           </div>
           <div class="row bg-light">
             <div class="col-xs-12">
               <div class="p-2">
-                <a class="text-dark" href="#">Orders</a>
+                <a class="text-decoration-none text-dark" href="#">Favorites</a>
               </div>
             </div>
           </div>
           <div class="row bg-light">
             <div class="col-xs-12">
               <div class="p-2">
-                <a class="text-dark" href="{% url 'account_logout' %}">Log Out</a>
+                <a class="text-decoration-none text-dark" href="#">Orders</a>
+              </div>
+            </div>
+          </div>
+          <div class="row bg-light">
+            <div class="col-xs-12">
+              <div class="p-2">
+                <a class="text-decoration-none text-dark" href="{% url 'account_logout' %}">Log Out</a>
               </div>
             </div>
           </div>

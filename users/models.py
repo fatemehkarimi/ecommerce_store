@@ -35,3 +35,14 @@ class UserProfile(models.Model):
     
     def get_absolute_url(self):
         return reverse("user_profile", kwargs={"pk": self.pk})
+
+class UserAddress(models.Model):
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE)
+    city = models.CharField(max_length=255)
+    adress = models.TextField()
+    zip_code = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.zip_code
+    

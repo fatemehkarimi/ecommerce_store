@@ -1,0 +1,91 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Addresses{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <img src="{% static 'images/user.png' %}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="container">
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="{% url 'user_profile' user.pk %}">Profile</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="{% url 'user_addresses' %}">Adresses</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="#">Favorites</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="#">Orders</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row bg-light">
+                  <div class="col-xs-12">
+                    <div class="p-2">
+                      <a class="text-dark text-decoration-none" href="{% url 'account_logout' %}">Log Out</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="container">
+          <h5 style="display:inline">Addresses</h5>
+          <a class="text-decoration-none float-right" style="display:inline" href="{% url 'add_new_address' %}">+Add new address</a>
+          <br><br>
+          {% if not addresses %}
+            <h5 class="text-muted text-center">No Addresses</h5>
+          {% endif %}
+          {% for address in addresses %}
+            <div class="row">
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <p>City: {{ address.city }}</p>
+                    <p>Zip Code: {{ address.zip_code }}</p>
+                    <p>Address: {{ address.adress }}</p>
+                    <p>
+                      <form action="{% url 'delete_address' address.pk %}" method="post">
+                        {% csrf_token %}
+                        <a class="text-decoration-none btn text-warning" style="display:inline" href="#">Edit</a> |
+                        <button class="text-decoration-none btn btn-link text-danger" style="display:inline" type="submit">Delete</button>
+                      </form>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

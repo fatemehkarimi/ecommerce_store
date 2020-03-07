@@ -1,14 +1,16 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-from django.views.generic.edit import UpdateView
+from django.views.generic import CreateView, ListView
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
-from .models import UserProfile
+from .models import UserProfile, UserAddress
 from .forms import EditProfileForm
 # Create your views here.
 
 class UserProfileView(View):
     template_name = 'account/user_profile.html'
-
 
     def get(self, request, *args, **kwargs):
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
@@ -22,3 +24,32 @@ class EditProfileView(UpdateView):
     model = UserProfile
     form_class = EditProfileForm
     template_name = 'account/edit_profile.html'
+
+
+class AddNewAddressView(LoginRequiredMixin, CreateView):
+    model = UserAddress
+    fields = ('city', 'adress', 'zip_code',)
+    template_name = 'account/add_new_address.html'
+    login_url = 'account_login'
+
+    def get_success_url(self):
+        return reverse_lazy('user_addresses')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class AddressListView(LoginRequiredMixin, ListView):
+    model = UserAddress
+    template_name = 'account/user_addresses.html'
+    context_object_name = 'addresses'
+    login_url = 'account_login'
+
+    def get_queryset(self, **kwargs):
+        return UserAddress.objects.filter(user=self.request.user)
+
+
+class AddressDeleteView(DeleteView):
+    model = UserAddress
+    success_url = reverse_lazy('user_addresses')

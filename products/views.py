@@ -47,7 +47,6 @@ class ProductSearchResultListView(ListView):
         name = self.request.GET.get('product_name')
         return GeneralProduct.objects.filter(
             Q(product_name__icontains=name)
-            | Q(subcategory__subcategory_name__icontains=name)
-            | Q(subcategory__parent_category__category_name__icontains=name))
+            | Q(subcategory__subcategory_name__icontains=name))
 
     

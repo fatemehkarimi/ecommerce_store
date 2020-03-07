@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add new address{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-8">
+        <form method="post" action="">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button class="btn btn-success" type="submit">Add</button>
+        </form>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+{% endblock content %}
