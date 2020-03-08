@@ -1,0 +1,78 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}View Cart{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5>Total</h5>
+            <hr>
+            <h1 class="text-danger" style="display:inline">
+              {% if items %}
+                {{ sum_total }}
+              {% else %}
+                0
+              {% endif %}
+            </h1>
+            <h6 class="text-danger" style="display:inline"> Toman</h6>
+            <hr>
+            <a href="#" class="btn btn-success btn-block">Proceed to CheckOut</a>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="col-8">
+        <div class="container">
+          {% if not items %}
+            <div class="container">
+              <div class="row">
+                <div class="col text-center">
+                  <h2 class="text-muted">Your Cart Is Empty</h2>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          {% for item in items %}
+            <div class="row">
+              <div class="col">
+                <div class="card">
+                  <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                      <img class="product-in-cart" src="{{ item.product.product_img1.url }}">
+                    </div>
+                    <div class="card-body">
+                      <h3>{{ item.product.product_name }}</h3>
+                      <h5 class="text-danger">{{ item.product.price_per_unit }} Toman</h5>
+                      <p>
+                        <div class="dropdown">
+                          <button class="btn btn-light dropdown-toggle" type="submit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ item.quantity }}
+                          </button>
+                          <div class="dropdown-menu">
+                            <button class="dropdown-item" type="button">1</button>
+                            <button class="dropdown-item" type="button">2</button>
+                            <button class="dropdown-item" type="button">3</button>
+                            <button class="dropdown-item" type="button">4</button>
+                            <button class="dropdown-item" type="button">5</button>
+                          </div>
+                        </div>
+                      </p>
+                      <p>
+                        <a class="text-decoration-none text-muted" href="#">Delete</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

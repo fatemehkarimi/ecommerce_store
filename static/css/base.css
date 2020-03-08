@@ -35,12 +35,6 @@ hr.hr-text {
     height: auto;
 }
 
-.user-profile{
-    width: 300px;
-    height: auto;
-}
-
-
 .dropdown-submenu {
     position: relative;
 }
@@ -87,4 +81,14 @@ hr.hr-text {
     -webkit-border-radius: 6px 0 6px 6px;
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
+}
+
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.product-in-cart{
+    max-width: 400px;
+    height: auto;
 }

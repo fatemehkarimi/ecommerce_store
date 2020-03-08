@@ -34,7 +34,7 @@
                   {% for subcat in subcategories %}
                     {% if subcat.parent_category.category_name == cat.category_name %}
                       <li class="dropdown-item">
-                        <a tabindex="-1" href="{% url 'product_subcat' %}?subcat={{ subcat.subcategory_name }}">{{ subcat.subcategory_name }}</a>
+                        <a class="text-decoration-none text-dark" tabindex="-1" href="{% url 'product_subcat' %}?subcat={{ subcat.subcategory_name }}">{{ subcat.subcategory_name }}</a>
                     </li>
                     {% endif %}
                   {% endfor %}
@@ -57,7 +57,7 @@
           <span class="sr-only">(current)</span>
         </a>
       {% endif %}
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{% url 'view_cart' %}">
         <img class="nav-bar-icon" src="{% static 'images/basket.png' %}"></img>
         <span class="sr-only">(current)</span></a>
     </div>
