@@ -35,7 +35,22 @@
           <br><br>
           <div class="row">
             <div class="col">
-              <button class="btn btn-success float-right btn-lg">Add to the Card</button>
+              <div class="btn-toolbar float-right">
+                <form method="post" action="{% url 'add_item_to_cart' object.pk %}">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label>Choose Amount</label>
+                    <select name="quantity" class="form-control">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <button class="btn btn-success btn-lg" type="submit">Add to the Card</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

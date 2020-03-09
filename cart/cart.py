@@ -33,6 +33,16 @@ class _Cart:
     def get_items_list(self):
         return CartItem.objects.filter(cart=self.cart)
 
+    def add_item_to_cart(self, product_pk, quantity=1):
+        item_set = self.get_items_list()
+        item = item_set.filter(product__pk=product_pk).first()
+
+        if item:
+            item.quantity = int(quantity)
+            item.save()
+        else:
+            CartItem.objects.create(cart=self.cart, product_id=product_pk, quantity=int(quantity))
+
     def sum_total(self):
         item_set = self.get_items_list()
         return item_set.aggregate(
