@@ -48,21 +48,25 @@
                       <h3>{{ item.product.product_name }}</h3>
                       <h5 class="text-danger">{{ item.product.price_per_unit }} Toman</h5>
                       <p>
-                        <div class="dropdown">
-                          <button class="btn btn-light dropdown-toggle" type="submit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ item.quantity }}
-                          </button>
-                          <div class="dropdown-menu">
-                            <button class="dropdown-item" type="button">1</button>
-                            <button class="dropdown-item" type="button">2</button>
-                            <button class="dropdown-item" type="button">3</button>
-                            <button class="dropdown-item" type="button">4</button>
-                            <button class="dropdown-item" type="button">5</button>
-                          </div>
+                        <div class="form-group">
+                          <form method="post" action="{% url 'add_item_to_cart' item.product.pk %}">
+                            {% csrf_token %}
+                            <select name="quantity" class="form-control" onChange="form.submit();">
+                              <option value="" hidden>{{ item.quantity }}</option>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
+                          </form>
                         </div>
                       </p>
                       <p>
-                        <a class="text-decoration-none text-muted" href="#">Delete</a>
+                        <form method="post" action="{% url 'remove_item_from_cart' item.product.pk %}">
+                          {% csrf_token %}
+                          <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
                       </p>
                     </div>
                   </div>

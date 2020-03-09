@@ -43,6 +43,13 @@ class _Cart:
         else:
             CartItem.objects.create(cart=self.cart, product_id=product_pk, quantity=int(quantity))
 
+    def remove_item_from_cart(self, product_pk):
+        item_set = self.get_items_list()
+        item = item_set.filter(product__pk=product_pk).first()
+
+        if item:
+            item.delete()
+
     def sum_total(self):
         item_set = self.get_items_list()
         return item_set.aggregate(

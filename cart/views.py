@@ -36,3 +36,14 @@ class AddItemToCartView(View):
         quantity = request.POST.get('quantity', 1)
         self.cart.add_item_to_cart(product_pk=kwargs['pk'], quantity=quantity)
         return HttpResponseRedirect(reverse('view_cart'))
+
+
+class RemoveItemFromCart(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.cart = _Cart(request)
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.cart.remove_item_from_cart(kwargs['pk'])
+        return HttpResponseRedirect(reverse('view_cart'))
