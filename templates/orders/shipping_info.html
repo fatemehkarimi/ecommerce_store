@@ -1,0 +1,75 @@
+{% extends '_base.html' %}
+
+{% block title %}Shipping Info{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5>SubTotal</h5>
+            <hr>
+            <p style="display:inline">
+                {{ sum_total }} Toman
+            </p>
+            <hr>
+            <h5>Shipping To</h5>
+            <p>{{ ship_address.city }}</p>
+            <hr>
+            <h5>Shipping Cost</h5>
+            <p>
+              {% if ship_cost %}
+                {{ ship_cost }} Toman
+              {% else %}
+                -
+              {% endif %}
+            </p>
+            <hr>
+            <h3>Total</h3>
+            <h1 class="text-danger" style="display:inline">{{ must_pay }}</h1>
+            <h6 class="text-danger" style="display:inline">Toman</h6>
+            <br><br>
+            <a href="#" class="btn btn-success btn-block">CheckOut</a>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="col-8">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Choose Shipping Address, Or <a class="text-decoration-none" href="{% url 'add_new_address' %}">add a new address</a></h5>
+                  <p>
+                    <form method="get" action="">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <select name="selected_address" class="form-control" onChange="form.submit();">
+                          {% if ship_address %}
+                            <option value="" hidden>{{ ship_address.adress }}</option>
+                          {% else %}
+                            <option value="" hidden>Choose An Address</option>
+                          {% endif %}
+                          {% for address in addresses %}
+                            <option value="{{ address.pk }}">{{ address.adress }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      {% if ship_address %}
+                        <p>City: {{ ship_address.city }}</p>
+                        <p>Address: {{ ship_address.adress|linebreaks }}</p>
+                        <p>Zip Code: {{ ship_address.zip_code }}</p>
+                      {% endif %}
+                    </form>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

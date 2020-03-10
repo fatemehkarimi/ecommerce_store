@@ -3,7 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse
 
+from .shipping_costs import get_city_cost
+
+
 from .models import Cart, CartItem
+from users.views import AddressListView
 from .cart import _Cart
 
 # Create your views here.
@@ -47,3 +51,23 @@ class RemoveItemFromCart(View):
     def post(self, request, *args, **kwargs):
         self.cart.remove_item_from_cart(kwargs['pk'])
         return HttpResponseRedirect(reverse('view_cart'))
+
+class ShippingAddresses(AddressListView):
+    template_name = 'orders/shipping_info.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        self.cart = _Cart(request)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sum_total'] = self.cart.sum_total()
+        ship_address_id = self.request.GET.get('selected_address')
+        if ship_address_id:
+            for address in context['addresses']:
+                if int(address.pk) == int(ship_address_id):
+                    context['ship_address'] = address
+                    context['ship_cost'] = get_city_cost(address.city)
+                    context['must_pay'] = context['sum_total'] + context['ship_cost']
+                    break
+        return context
