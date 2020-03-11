@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'products.apps.ProductsConfig',
     'cart.apps.CartConfig',
+    'user_favorites.apps.UserFavoritesConfig',
 ]
 
 AUTH_USER_MODEL = 'users.User'

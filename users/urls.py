@@ -7,7 +7,13 @@ from .views import (
     AddressDeleteView,
     AddressUpdateView,
 )
-
+'''
+from products.views import(
+    UserFavoritesListView,
+    FavDeleteView,
+    FavCreateView,
+)
+'''
 urlpatterns = [
     path('user/profile/',
         UserProfileView.as_view(), name="user_profile"),
@@ -20,5 +26,5 @@ urlpatterns = [
     path('user/delete/address/<int:pk>/',
         AddressDeleteView.as_view(), name='delete_address'),
     path('user/edit/address/<int:pk>/',
-        AddressUpdateView.as_view(), name='edit_address')
+        AddressUpdateView.as_view(), name='edit_address'),
 ]

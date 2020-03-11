@@ -34,7 +34,7 @@ class UserProfile(models.Model):
         return self.user.username
     
     def get_absolute_url(self):
-        return reverse("user_profile", kwargs={"pk": self.pk})
+        return reverse("user_profile")
 
 class UserAddress(models.Model):
     user = models.ForeignKey(

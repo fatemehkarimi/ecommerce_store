@@ -5,6 +5,7 @@ from django.views.generic import CreateView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.template.response import TemplateResponse
+from django.http import HttpResponseRedirect
 
 from .models import UserProfile, UserAddress
 from .forms import EditProfileForm
@@ -63,3 +64,5 @@ class AddressUpdateView(UpdateView):
     fields = ('city', 'adress', 'zip_code',)
     success_url = reverse_lazy('user_addresses')
     template_name = 'account/update_address.html'
+
+

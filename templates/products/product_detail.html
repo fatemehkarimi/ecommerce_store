@@ -11,7 +11,18 @@
         <div class="container">
           <div class="row">
             <div class="col">
-              <h3>{{ object.product_name }}</h3>
+              <h3 style="display:inline">{{ object.product_name }}</h3>
+              {% if not item_is_faved %}
+                <form method="post" action="{% url 'create_fav' object.pk %}" style="display:inline">
+                  {% csrf_token %}
+                    <input class="fav-list-icon float-right" type="image" src="{% static 'images/heart_empty.svg' %}" alt="Submit">
+                </form>
+              {% else %}
+                <form method="post" action="{% url 'delete_fav' item_is_faved.pk %}" style="display:inline">
+                  {% csrf_token %}
+                  <input class="fav-list-icon float-right" type="image" src="{% static 'images/heart_red.svg' %}" alt="Submit">
+                </form>
+              {% endif %}
             </div>
           </div>
           <div class="row">
@@ -88,4 +99,5 @@
       </div>
     </div>
   </div>
+  <script>
 {% endblock content %}

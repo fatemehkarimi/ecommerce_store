@@ -1,0 +1,48 @@
+{% extends '_base_profile.html' %}
+{% load static %}
+
+{% block title %}Favorites{% endblock title %}
+
+{% block profile_content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        {% if not favorites %}
+          <h5 class="text-muted text-center">Favorite List is empty</h5>
+        {% endif %}
+        {% for fav in favorites %}
+          <div class="card">
+            <div class="card-horizontal">
+              <div class="img-square-wrapper">
+                <img class="product-in-cart" src="{{ fav.product.product_img1.url }}">
+              </div>
+              <div class="card-body">
+                <h3>
+                  <a class="text-decoration-none text-dark" href="{% url 'product_detail' fav.product.pk %}">{{ fav.product.product_name}}</a>
+                </h3>
+                <p>
+                  <h1 class="text-danger" style="display:inline">{{ fav.product.price_per_unit }}</h1>
+                  <h6 class="text-danger" style="display:inline">Toman</h6>
+                </p>
+                <div class="btn-group btn-block btn-group-justify">
+                  <a class="btn btn-success" href="{% url 'product_detail' fav.product.pk %}">View Details</a>
+                  <div class="dropdown float-right">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                      <form method="post" action="{% url 'delete_fav' fav.pk %}">
+                        {% csrf_token %}
+                        <button class="dropdown-item" type="submit">delete</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock profile_content %}

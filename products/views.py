@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, DeleteView
+
+from user_favorites.models import UserFavorites
 
 from .models import (
     GeneralProduct,
@@ -35,6 +37,13 @@ class ProductDetailView(DetailView):
         else:
             context['uncountable_product_info'] = UnCountableProduct.objects.get(
                 pk=self.object.pk)
+
+        #check if product is in favorite list or not
+        
+        if self.request.user.is_authenticated:
+            fav = UserFavorites.objects.filter(user=self.request.user, product=self.object).first()
+            context['item_is_faved'] = fav if fav else None
+        
         return context
 
 
@@ -49,4 +58,3 @@ class ProductSearchResultListView(ListView):
             Q(product_name__icontains=name)
             | Q(subcategory__subcategory_name__icontains=name))
 
-    
