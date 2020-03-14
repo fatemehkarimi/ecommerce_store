@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+jupyter = "*"
+notebook = "*"
 
 [packages]
 django = "==2.2.7"
