@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.views.generic import ListView, DetailView, DeleteView
 
 from user_favorites.models import UserFavorites
+from reviews.models import Review
 
 from .models import (
     GeneralProduct,
@@ -32,17 +33,19 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         if self.object.is_countable:
-            context['countable_product_info'] = CountableProduct.objects.get(
-                pk=self.object.pk)
+            context['countable_product_info'] = CountableProduct.objects.filter(
+                product=self.object)
         else:
-            context['uncountable_product_info'] = UnCountableProduct.objects.get(
-                pk=self.object.pk)
+            context['uncountable_product_info'] = UnCountableProduct.objects.filter(
+                product=self.object)
 
         #check if product is in favorite list or not
         
         if self.request.user.is_authenticated:
             fav = UserFavorites.objects.filter(user=self.request.user, product=self.object).first()
             context['item_is_faved'] = fav if fav else None
+
+        context['reviews'] = Review.objects.filter(product=self.object)
         
         return context
 

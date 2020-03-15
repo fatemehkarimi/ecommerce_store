@@ -21,7 +21,14 @@ class UserFavoritesListView(LoginRequiredMixin, ListView):
 class FavDeleteView(LoginRequiredMixin, DeleteView):
     model = UserFavorites
     login_url = 'account_login'
-    success_url = reverse_lazy('user_favorites')
+
+    def get_success_url(self, **kwargs):
+        next = self.request.GET.get('next')
+        if next:
+            success_url = next
+        else:
+            success_url = reverse_lazy('user_favorites')
+        return success_url
 
 class FavCreateView(LoginRequiredMixin, View):
     login_url = 'account_login'
@@ -33,6 +40,9 @@ class FavCreateView(LoginRequiredMixin, View):
         if not fav:
             UserFavorites.objects.create(user=user, product=product)
 
-        #return HttpResponseRedirect(
-        #    reverse_lazy('product_detail', kwargs={'pk': self.kwargs['pk']}))
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        next = self.request.GET.get('next')
+        if next:
+            success_url = next
+        else:
+            success_url = reverse_lazy('user_favorites')
+        return HttpResponseRedirect(success_url)

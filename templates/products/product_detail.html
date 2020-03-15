@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load users_tags %}
 
 {% block content %}
   <div class="container">
@@ -13,12 +14,12 @@
             <div class="col">
               <h3 style="display:inline">{{ object.product_name }}</h3>
               {% if not item_is_faved %}
-                <form method="post" action="{% url 'create_fav' object.pk %}" style="display:inline">
+                <form method="post" action="{% url 'create_fav' object.pk %}?next={{ request.path }}" style="display:inline">
                   {% csrf_token %}
                     <input class="fav-list-icon float-right" type="image" src="{% static 'images/heart_empty.svg' %}" alt="Submit">
                 </form>
               {% else %}
-                <form method="post" action="{% url 'delete_fav' item_is_faved.pk %}" style="display:inline">
+                <form method="post" action="{% url 'delete_fav' item_is_faved.pk %}?next={{ request.path }}" style="display:inline">
                   {% csrf_token %}
                   <input class="fav-list-icon float-right" type="image" src="{% static 'images/heart_red.svg' %}" alt="Submit">
                 </form>
@@ -76,13 +77,22 @@
             <hr>
           </div>
         </div>
-        {% if not object.is_countable %}
+        {% if uncountable_product_info %}
           <div class="row">
             <div class="col bg-light text-dark">
               <h9>Amount</h9>
             </div>
             <div class="col-9 bg-light text-dark">
               <p>{{ uncountable_product_info.amount }} {{ uncountable_product_info.unit }}</p>
+            </div>
+          </div>
+        {% elif countable_product_info %}
+          <div class="row">
+            <div class="col bg-light text-dark">
+              <h9>Amount</h9>
+            </div>
+            <div class="col-9 bg-light text-dark">
+              <p>{{ countable_product_info.count }} per pack</p>
             </div>
           </div>
         {% endif %}
@@ -98,6 +108,45 @@
         {% endif %}
       </div>
     </div>
+    <br><br>
+    <div class="row">
+      <div class="col">
+        <h4>Reviews</h4>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-9">
+        <div class="container">
+          {% for rev in reviews %}
+            <div class="row">
+              <div class="col">
+                <div class="card border-0">
+                  <div class="card-body">
+                    <h7><strong>{{ rev.user.first_name }}</strong> </h7>
+                    {% with ''|center:5 as range %}
+                      {% for _ in range %}
+                        {% if forloop.counter0 < rev.rate %}
+                          <span class="fa fa-star" style="color:orange"></span>
+                        {% else %}
+                          <span class="fa fa-star"></span>
+                        {% endif %}
+                      {% endfor %}
+                    {% endwith %}
+                    <p>
+                      <h8>Reviewed on {{ rev.review_date }}</h8>
+                    </p>
+                    <p>{{ rev.review_body|linebreaks }}</p>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </div>
-  <script>
 {% endblock content %}

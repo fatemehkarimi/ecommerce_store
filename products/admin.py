@@ -1,11 +1,14 @@
 from django.contrib import admin
 from .models import (
     Category, SubCategory, Brand,
-    GeneralProduct, UnCountableProduct
+    GeneralProduct, CountableProduct, UnCountableProduct
 )
 
 class UnCountableProductInline(admin.TabularInline):
     model = UnCountableProduct
+
+class CountableProductInline(admin.TabularInline):
+    model = CountableProduct
 
 class SubCategoryInline(admin.TabularInline):
     model = SubCategory
@@ -22,7 +25,8 @@ class BrandAdmin(admin.ModelAdmin):
 
 class GenralProductAdmin(admin.ModelAdmin):
     inlines = [
-        UnCountableProductInline
+        UnCountableProductInline,
+        CountableProductInline
     ]
 
     list_display = ['product_name', 'brand', 'subcategory',

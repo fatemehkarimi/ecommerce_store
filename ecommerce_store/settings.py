@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'cart.apps.CartConfig',
     'user_favorites.apps.UserFavoritesConfig',
+    'reviews.apps.ReviewsConfig',
 ]
 
 AUTH_USER_MODEL = 'users.User'
