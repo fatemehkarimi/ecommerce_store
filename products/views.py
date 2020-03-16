@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, DeleteView
 
 from user_favorites.models import UserFavorites
 from reviews.models import Review
+from reviews.rate_analyze import RateAnalyze
 
 from .models import (
     GeneralProduct,
@@ -46,7 +47,10 @@ class ProductDetailView(DetailView):
             context['item_is_faved'] = fav if fav else None
 
         context['reviews'] = Review.objects.filter(product=self.object)
-        
+
+        rate_analyze = RateAnalyze(product=self.object)
+        context['avg_product_rate'] = rate_analyze.get_avg_rating()
+        context['rate_diagram'] = rate_analyze.get_rate_plot()
         return context
 
 

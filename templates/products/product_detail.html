@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% load users_tags %}
 
@@ -117,14 +118,52 @@
     </div>
     <div class="row">
       <div class="col">
+        {% if not avg_product_rate %}
+          <h6>Be first to write a review</h6>
+        {% else %}
+          <h1>{{ avg_product_rate }} Out Of 5</h1>
+          <img class="img-fluid" src="data:image/png;base64,{{ rate_diagram }}">
+        {% endif %}
       </div>
-      <div class="col-9">
+      <div class="col-8">
         <div class="container">
+          <div class="row">
+            <div class="col">
+              {% if user.is_authenticated %}
+                <h6>Write a Review</h6>
+                <form method="post" action="{% url 'write_review' object.pk %}?next={{ request.path }}">
+                  {% csrf_token %}
+                  <p>
+                    <select name="review_rate" class="form-control">
+                      <option value="0">I have no idea</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </p>
+                  <div class="form-group">
+                    <textarea name = "review_text" class="form-control" rows="3"></textarea>
+                  </div>
+                  <button class="btn btn-info float-right" type="submit">Comment</button>
+                </form>
+              {% else %}
+                <h4 class="text-muted text-center">Sign In To Leave A Review</h4>
+              {% endif %}
+            </div>
+          </div>
           {% for rev in reviews %}
             <div class="row">
               <div class="col">
                 <div class="card border-0">
                   <div class="card-body">
+                    {% if user.is_authenticated and user.pk == rev.user.pk %}
+                      <form method="post" action="{% url 'delete_review' rev.pk %}?next={{ request.path }}">
+                        {% csrf_token %}
+                        <button class="btn btn-lik text-decoration-none text-muted float-right" style="font-size:12px" type="submit">Delete</button>
+                      </form>
+                    {% endif %}
                     <h7><strong>{{ rev.user.first_name }}</strong> </h7>
                     {% with ''|center:5 as range %}
                       {% for _ in range %}
