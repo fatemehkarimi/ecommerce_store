@@ -35,10 +35,10 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         if self.object.is_countable:
             context['countable_product_info'] = CountableProduct.objects.filter(
-                product=self.object)
+                product=self.object).first()
         else:
             context['uncountable_product_info'] = UnCountableProduct.objects.filter(
-                product=self.object)
+                product=self.object).first()
 
         #check if product is in favorite list or not
         

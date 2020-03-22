@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from products.models import GeneralProduct
 from .models import Review
 # Create your views here.
 
-class UserReviewCreateView(View):
+class UserReviewCreateView(LoginRequiredMixin, View):
+    login_url = 'account_login'
 
     def post(self, request, *args, **kwargs):
         review_body = request.POST.get('review_text')
@@ -24,8 +26,8 @@ class UserReviewCreateView(View):
         return HttpResponseRedirect(success_url)
         
 
-class UserReviewDeleteView(View):
-
+class UserReviewDeleteView(LoginRequiredMixin, View):
+    login_url = 'account_login'
     def post(self, request, *args, **kwargs):
         Review.objects.filter(pk=kwargs['pk']).delete()
 

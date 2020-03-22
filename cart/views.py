@@ -1,7 +1,7 @@
 from django.views.generic import View, ListView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse, reverse
+from django.urls import reverse
 
 from .shipping_costs import get_city_cost
 
@@ -54,7 +54,7 @@ class RemoveItemFromCart(View):
 
 class ShippingAddresses(AddressListView):
     template_name = 'orders/shipping_info.html'
-    
+
     def dispatch(self, request, *args, **kwargs):
         self.cart = _Cart(request)
         return super().dispatch(request, *args, **kwargs)

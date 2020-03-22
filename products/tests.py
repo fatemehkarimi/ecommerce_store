@@ -1,4 +1,6 @@
+import tempfile
 from django.test import TestCase
+from django.urls import reverse
 
 from .models import (
     Category,
@@ -23,6 +25,7 @@ class ProductTests(TestCase):
         'price_per_unit': '30000',
         'total_available_in_stock': '8',
         'is_countable': '0',
+        'product_img1': tempfile.NamedTemporaryFile(suffix=".jpg").name,
     }
     countable_product = {
         'product_name': 'test_countable_product',
@@ -30,6 +33,7 @@ class ProductTests(TestCase):
         'price_per_unit': '80',
         'total_available_in_stock': '0',
         'is_countable': '1',
+        'product_img1': tempfile.NamedTemporaryFile(suffix=".jpg").name
     }
 
     def setUp(self):
@@ -52,7 +56,8 @@ class ProductTests(TestCase):
             product_description=self.uncountable_product['product_description'],
             price_per_unit=self.uncountable_product['price_per_unit'],
             total_available_in_stock=self.uncountable_product['total_available_in_stock'],
-            is_countable=self.uncountable_product['is_countable']
+            is_countable=self.uncountable_product['is_countable'],
+            product_img1=self.uncountable_product['product_img1'],
         )
 
         self.test_cproduct = GeneralProduct.objects.create(
@@ -62,7 +67,8 @@ class ProductTests(TestCase):
             product_description=self.countable_product['product_description'],
             price_per_unit=self.countable_product['price_per_unit'],
             total_available_in_stock=self.countable_product['total_available_in_stock'],
-            is_countable=self.countable_product['is_countable']
+            is_countable=self.countable_product['is_countable'],
+            product_img1=self.countable_product['product_img1'],
         )
 
     def test_category_created(self):
@@ -145,3 +151,18 @@ class ProductTests(TestCase):
         self.assertEqual(test_ucdetail.product, self.test_ucproduct)
         self.assertEqual(test_ucdetail.amount, uc_detail['amount'])
         self.assertEqual(test_ucdetail.unit, uc_detail['unit'])
+
+    def test_product_detail_url(self):
+        url = reverse('product_detail', kwargs={'pk': self.test_ucproduct.pk})
+        self.assertEqual(url, f'/products/detail/{self.test_ucproduct.pk}')
+
+    def test_product_detail_page(self):
+        response = self.client.get(
+            reverse('product_detail', kwargs={'pk': self.test_ucproduct.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products/product_detail.html')
+        self.assertContains(response, self.uncountable_product['product_name'])
+        self.assertContains(response, self.brand['brand_name'])
+        self.assertContains(response, self.subcategory['subcategory_name'])
+        self.assertContains(response, self.uncountable_product['price_per_unit'])
+        self.assertContains(response, self.uncountable_product['product_description'])

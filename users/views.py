@@ -24,10 +24,11 @@ class UserProfileView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class EditProfileView(UpdateView):
+class EditProfileView(LoginRequiredMixin, UpdateView):
     model = UserProfile
     form_class = EditProfileForm
     template_name = 'account/edit_profile.html'
+    login_url = 'account_login'
 
 
 class AddNewAddressView(LoginRequiredMixin, CreateView):
@@ -54,15 +55,15 @@ class AddressListView(LoginRequiredMixin, ListView):
         return UserAddress.objects.filter(user=self.request.user)
 
 
-class AddressDeleteView(DeleteView):
+class AddressDeleteView(LoginRequiredMixin, DeleteView):
     model = UserAddress
     success_url = reverse_lazy('user_addresses')
+    login_url = 'account_login'
 
-
-class AddressUpdateView(UpdateView):
+class AddressUpdateView(LoginRequiredMixin, UpdateView):
     model = UserAddress
     fields = ('city', 'adress', 'zip_code',)
     success_url = reverse_lazy('user_addresses')
     template_name = 'account/update_address.html'
-
+    login_url = 'account_login'
 
