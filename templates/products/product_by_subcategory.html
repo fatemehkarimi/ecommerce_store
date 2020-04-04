@@ -15,7 +15,7 @@
               </div>
               <div class="card-footer">
                 <div class="float-center">
-                  <label href="#" class="text-dark">{{ product.price_per_unit }} Toman</label>
+                  <label href="#" class="text-dark">{{ product.price_per_unit }}$</label>
                   <br>
                   <form method="post" action="{% url 'add_item_to_cart' product.pk %}">
                     {% csrf_token %}

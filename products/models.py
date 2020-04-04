@@ -39,7 +39,7 @@ class GeneralProduct(models.Model):
         blank=True, null=True
     )    
     product_description = models.TextField(editable=True, blank=True, null=True)
-    price_per_unit = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    price_per_unit = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_available_in_stock = models.PositiveIntegerField(default=0)
     is_countable = models.BooleanField(default=1)
     product_img1 = models.ImageField(upload_to='products/', blank=True, null=True)

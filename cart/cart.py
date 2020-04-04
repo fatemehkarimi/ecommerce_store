@@ -12,9 +12,6 @@ class _Cart:
             cart = Cart.objects.filter(id=cart_id, checked_out=False).first()
             if cart is None:
                 cart = self.new_cart(request)
-            elif cart.expiration_date < timezone.now():
-                self.delete_cart(cart)
-                cart = self.new_cart(request)
         else:
             cart = self.new_cart(request)
         self.cart = cart

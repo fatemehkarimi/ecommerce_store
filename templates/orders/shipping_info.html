@@ -11,7 +11,7 @@
             <h5>SubTotal</h5>
             <hr>
             <p style="display:inline">
-                {{ sum_total }} Toman
+                {{ sum_total }} $
             </p>
             <hr>
             <h5>Shipping To</h5>
@@ -19,8 +19,8 @@
             <hr>
             <h5>Shipping Cost</h5>
             <p>
-              {% if ship_cost %}
-                {{ ship_cost }} Toman
+              {% if ship_cost >= 0 %}
+                {{ ship_cost }} $
               {% else %}
                 -
               {% endif %}
@@ -28,9 +28,9 @@
             <hr>
             <h3>Total</h3>
             <h1 class="text-danger" style="display:inline">{{ must_pay }}</h1>
-            <h6 class="text-danger" style="display:inline">Toman</h6>
+            <h6 class="text-danger" style="display:inline">$</h6>
             <br><br>
-            <a href="#" class="btn btn-success btn-block">CheckOut</a>
+            <a href="{% url 'request' %}" class="btn btn-success btn-block">CheckOut</a>
           </div>
         </div>
         <br>

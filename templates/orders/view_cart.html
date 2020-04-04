@@ -18,7 +18,7 @@
                 0
               {% endif %}
             </h1>
-            <h6 class="text-danger" style="display:inline"> Toman</h6>
+            <h6 class="text-danger" style="display:inline"> $</h6>
             <hr>
             <a href="{% url 'shipping_info' %}" class="btn btn-success btn-block">Proceed to CheckOut</a>
           </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="card-body">
                       <h3>{{ item.product.product_name }}</h3>
-                      <h5 class="text-danger">{{ item.product.price_per_unit }} Toman</h5>
+                      <h5 class="text-danger">{{ item.product.price_per_unit }} $</h5>
                       <p>
                         <div class="form-group">
                           <form method="post" action="{% url 'add_item_to_cart' item.product.pk %}">

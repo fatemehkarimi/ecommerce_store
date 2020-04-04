@@ -16,9 +16,9 @@ class Order(models.Model):
 
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
     order_date = models.DateTimeField(auto_now_add=True)
-    net_sale_amount = models.DecimalField(max_digits=10, decimal_places=0)
-    shipping_amount = models.DecimalField(max_digits=10, decimal_places=0)
-    total_paid = models.DecimalField(max_digits=10, decimal_places=0)
+    net_sale_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    shipping_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    total_paid = models.DecimalField(max_digits=10, decimal_places=2)
     destination_address = models.ForeignKey(
         UserAddress, on_delete=models.SET_NULL, null=True, blank=True)
     order_status = models.IntegerField(choices=ORDER_STATUS, default=1)
@@ -31,8 +31,12 @@ class OrderItem(models.Model):
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
     item = models.ForeignKey(GeneralProduct, on_delete=models.PROTECT)
     count = models.PositiveIntegerField(default=1)
-    unit_price = models.DecimalField(max_digits=10, decimal_places=0)
-    total_price = models.DecimalField(max_digits=10, decimal_places=0)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def save(self):
+        self.total_price = self.unit_price * self.unit_price
+        super(OrderItem, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.pk
