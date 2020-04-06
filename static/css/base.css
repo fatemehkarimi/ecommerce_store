@@ -97,3 +97,8 @@ hr.hr-text {
     max-width: 30px;
     height: auto;
 }
+
+
+.truck-on-way {
+    max-width: 300px;
+}

@@ -3,10 +3,12 @@ from django.utils import timezone
 from django.db.models import F, Sum, DecimalField
 from .models import Cart, CartItem
 
+from .shipping_costs import ShippingCost
+
 CART_ID = 'CART-ID'
 
 class _Cart:
-    def __init__(self, request):
+    def __init__(self, request, address_id=None):
         cart_id = request.session.get(CART_ID)
         if cart_id:
             cart = Cart.objects.filter(id=cart_id, checked_out=False).first()
@@ -15,6 +17,7 @@ class _Cart:
         else:
             cart = self.new_cart(request)
         self.cart = cart
+        self.shipping_costs = ShippingCost(address_id)
 
     def new_cart(self, request):
         cart = Cart.objects.create(
@@ -54,3 +57,11 @@ class _Cart:
             output_field=DecimalField(
                 max_digits=10, decimal_places=0)
         )).get('total', 0)
+
+    def shopping_shipping_total_cost(self):
+        shopping_cost = self.sum_total()
+        shipping_cost = self.shipping_costs.get_city_cost()
+        return shopping_cost + shipping_cost
+
+    def get_stripe_cost(self):
+        return int(self.shopping_shipping_total_cost() * 100)

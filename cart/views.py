@@ -2,16 +2,16 @@ from django.views.generic import View, ListView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.conf import settings
 
-from .shipping_costs import get_city_cost
-
+import stripe
 
 from .models import Cart, CartItem
 from users.views import AddressListView
 from .cart import _Cart
 
 # Create your views here.
-
+stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 class CartListView(ListView):
     model = CartItem
     template_name = 'orders/view_cart.html'
@@ -62,12 +62,25 @@ class ShippingAddresses(AddressListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sum_total'] = self.cart.sum_total()
+        context['stripe_key'] = settings.STRIPE_TEST_PUBLISHABLE_KEY
         ship_address_id = self.request.GET.get('selected_address')
         if ship_address_id:
-            for address in context['addresses']:
-                if int(address.pk) == int(ship_address_id):
-                    context['ship_address'] = address
-                    context['ship_cost'] = get_city_cost(address.city)
-                    context['must_pay'] = context['sum_total'] + context['ship_cost']
-                    break
+            ship_address_id = int(ship_address_id)
+            self.cart.shipping_costs.change_ship_adderss(ship_address_id)
+            context['ship_address'] = self.cart.shipping_costs.address
+            context['ship_cost'] = self.cart.shipping_costs.get_city_cost()
+            context['must_pay'] = self.cart.shopping_shipping_total_cost()
+            context['stripe_amount'] = self.cart.get_stripe_cost()
         return context
+
+
+def charge(request):
+    if request.method == 'POST':
+        cart = _Cart(request)
+        charge = stripe.Charge.create(
+            amount=cart.get_stripe_cost(),
+            currency='usd',
+            source=request.POST['stripeToken']
+        )
+
+    return render(request, 'orders/success_purchase.html')

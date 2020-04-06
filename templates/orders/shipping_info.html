@@ -30,7 +30,12 @@
             <h1 class="text-danger" style="display:inline">{{ must_pay }}</h1>
             <h6 class="text-danger" style="display:inline">$</h6>
             <br><br>
-            <a href="{% url 'request' %}" class="btn btn-success btn-block">CheckOut</a>
+            <form action="{% url 'charge' %}" method="post">
+              {% csrf_token %}
+              <script src="https://checkout.stripe.com/checkout.js"
+              data-key={{ stripe_key }} data-amount="{{ stripe_amount }}" class="stripe-button" data-locale="auto">
+              </script>
+            </form>
           </div>
         </div>
         <br>
