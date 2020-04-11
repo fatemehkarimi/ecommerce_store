@@ -24,7 +24,7 @@ class Order(models.Model):
     order_status = models.IntegerField(choices=ORDER_STATUS, default=1)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
     
 
 class OrderItem(models.Model):

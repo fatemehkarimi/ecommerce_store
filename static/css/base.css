@@ -99,6 +99,9 @@ hr.hr-text {
 }
 
 
-.truck-on-way {
-    max-width: 300px;
+.poster {
+    max-height: 1000px;
+    width: auto;
+    margin: auto;
+    display: block;
 }

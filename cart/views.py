@@ -9,6 +9,7 @@ import stripe
 from .models import Cart, CartItem
 from users.views import AddressListView
 from .cart import _Cart
+from orders.models import Order, OrderItem
 
 # Create your views here.
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
@@ -83,4 +84,16 @@ def charge(request):
             source=request.POST['stripeToken']
         )
 
+    submitOrder(request, cart)
     return render(request, 'orders/success_purchase.html')
+
+
+def submitOrder(request, cart):
+    new_order = Order.objects.create(
+        user=request.user,
+        net_sale_amount=cart.sum_total(),
+        shipping_amount=cart.shipping_costs.get_city_cost(),
+        total_paid=cart.shopping_shipping_total_cost(),
+        destination_address=cart.shipping_costs.address
+    )
+    return new_order

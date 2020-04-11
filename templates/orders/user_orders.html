@@ -1,0 +1,31 @@
+{% extends '_base_profile.html' %}
+
+{% block title %}Orders{% endblock title %}
+
+{% block profile_content %}
+  <h5>Orders</h5>
+  <br><br>
+  {% if not orders %}
+    <h5 class="text-muted text-center">No Orders yet</h5>
+  {% endif %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>order Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order.order_date }}</td>
+          <td>{{ order.total_paid }}</td>
+          <td>{{ order.order_status }}</td>
+          <td><a href="#">></a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock profile_content %}
