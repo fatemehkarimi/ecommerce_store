@@ -1,0 +1,17 @@
+{% extends '_base_profile.html' %}
+{% block title %}order detail{% endblock title %}
+
+{% block profile_content %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Shipping Address</h5>
+            {{ order.destination_address.adress }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock profile_content %}

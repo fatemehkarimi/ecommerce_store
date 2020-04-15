@@ -8,11 +8,12 @@
   {% if not orders %}
     <h5 class="text-muted text-center">No Orders yet</h5>
   {% endif %}
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
+        <th>Order Id</th>
         <th>order Date</th>
-        <th>Amount</th>
+        <th>Amount Paid</th>
         <th>Status</th>
         <th>Details</th>
       </tr>
@@ -20,10 +21,11 @@
     <tbody>
       {% for order in orders %}
         <tr>
+          <td>{{ order.pk }}</td>
           <td>{{ order.order_date }}</td>
           <td>{{ order.total_paid }}</td>
-          <td>{{ order.order_status }}</td>
-          <td><a href="#">></a></td>
+          <td>{{ order.get_order_status_display }}</td>
+          <td><h3><a class="text-decoration-none text-secondary" href="{% url 'order_detail' order.pk %}"> ></a></h3></td>
         </tr>
       {% endfor %}
     </tbody>

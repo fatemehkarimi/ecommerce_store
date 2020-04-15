@@ -10,25 +10,27 @@ CART_ID = 'CART-ID'
 class _Cart:
     def __init__(self, request, address_id=None):
         cart_id = request.session.get(CART_ID)
+        self.request = request
         if cart_id:
             cart = Cart.objects.filter(id=cart_id, checked_out=False).first()
             if cart is None:
-                cart = self.new_cart(request)
+                cart = self.new_cart()
         else:
-            cart = self.new_cart(request)
+            cart = self.new_cart()
         self.cart = cart
         self.shipping_costs = ShippingCost(address_id)
 
-    def new_cart(self, request):
+    def new_cart(self):
         cart = Cart.objects.create(
             creation_date=datetime.now(),
             expiration_date=datetime.now() + timedelta(days=20)
         )
-        request.session[CART_ID] = cart.id
+        self.request.session[CART_ID] = cart.id
         return cart
 
-    def delete_cart(self, cart):
-        cart.delete()
+    def delete_cart(self):
+        self.cart.delete()
+        self.request.session.pop(CART_ID, None)
 
     def get_items_list(self):
         return CartItem.objects.filter(cart=self.cart)

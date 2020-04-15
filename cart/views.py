@@ -84,8 +84,10 @@ def charge(request):
             source=request.POST['stripeToken']
         )
 
-    submitOrder(request, cart)
-    return render(request, 'orders/success_purchase.html')
+        new_order = submitOrder(request, cart)
+        add_order_items(new_order, cart)
+        cart.delete_cart()
+        return render(request, 'orders/success_purchase.html')
 
 
 def submitOrder(request, cart):
@@ -97,3 +99,14 @@ def submitOrder(request, cart):
         destination_address=cart.shipping_costs.address
     )
     return new_order
+
+def add_order_items(order, cart):
+    items = cart.get_items_list()
+    for item in items:
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            count=item.quantity,
+            unit_price=item.product.price_per_unit
+        )
+    return
