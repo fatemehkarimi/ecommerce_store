@@ -1,13 +1,17 @@
 from django.db import models
 from datetime import datetime, timedelta
-from products.models import GeneralProduct
 
 # Create your models here.
+from products.models import GeneralProduct
+from users.models import UserAddress
 
 class Cart(models.Model):
     creation_date = models.DateTimeField()
     expiration_date = models.DateTimeField()
     checked_out = models.BooleanField(default=False)
+    destination_address = models.ForeignKey(
+        UserAddress, blank=True, null=True,
+        on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('-creation_date',)

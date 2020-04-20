@@ -1,6 +1,8 @@
 from decimal import Decimal
 from users.models import UserAddress
 
+ADDRESS_ID = 'ADDRESS_ID'
+
 class ShippingCost:
     CITY_COST ={
     'isfahan': Decimal(0),
@@ -9,16 +11,5 @@ class ShippingCost:
     'shiraz': Decimal(7.5),
     }
 
-    def __init__(self, ship_address_id=None):
-        if ship_address_id:
-            self.address = UserAddress.objects.get(pk=ship_address_id)
-        else:
-            self.address = None
-
-    def change_ship_adderss(self, address_id):
-        self.address = UserAddress.objects.get(pk=address_id)
-        
-    def get_city_cost(self):
-        if self.address is None:
-            return Decimal(15)
-        return self.CITY_COST.get(self.address.city.lower(), Decimal(15))
+    def get_city_cost(self, city_name):
+        return self.CITY_COST.get(city_name.lower(), Decimal(15))

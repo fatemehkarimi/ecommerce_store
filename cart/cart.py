@@ -4,6 +4,7 @@ from django.db.models import F, Sum, DecimalField
 from .models import Cart, CartItem
 
 from .shipping_costs import ShippingCost
+from users.models import UserAddress
 
 CART_ID = 'CART-ID'
 
@@ -18,7 +19,9 @@ class _Cart:
         else:
             cart = self.new_cart()
         self.cart = cart
-        self.shipping_costs = ShippingCost(address_id)
+        if address_id:
+            self.set_ship_address(address_id)
+        self.ship_cost = ShippingCost()
 
     def new_cart(self):
         cart = Cart.objects.create(
@@ -31,6 +34,10 @@ class _Cart:
     def delete_cart(self):
         self.cart.delete()
         self.request.session.pop(CART_ID, None)
+
+    def set_ship_address(self, address_id):
+        self.cart.destination_address = UserAddress.objects.get(pk=address_id)
+        self.cart.save()
 
     def get_items_list(self):
         return CartItem.objects.filter(cart=self.cart)
@@ -62,7 +69,8 @@ class _Cart:
 
     def shopping_shipping_total_cost(self):
         shopping_cost = self.sum_total()
-        shipping_cost = self.shipping_costs.get_city_cost()
+        shipping_cost = self.ship_cost.get_city_cost(
+            self.cart.destination_address.city)
         return shopping_cost + shipping_cost
 
     def get_stripe_cost(self):

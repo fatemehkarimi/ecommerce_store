@@ -64,12 +64,13 @@ class ShippingAddresses(AddressListView):
         context = super().get_context_data(**kwargs)
         context['sum_total'] = self.cart.sum_total()
         context['stripe_key'] = settings.STRIPE_TEST_PUBLISHABLE_KEY
+
         ship_address_id = self.request.GET.get('selected_address')
         if ship_address_id:
             ship_address_id = int(ship_address_id)
-            self.cart.shipping_costs.change_ship_adderss(ship_address_id)
-            context['ship_address'] = self.cart.shipping_costs.address
-            context['ship_cost'] = self.cart.shipping_costs.get_city_cost()
+            self.cart.set_ship_address(ship_address_id)
+            context['ship_address'] = self.cart.cart.destination_address
+            context['ship_cost'] = self.cart.ship_cost.get_city_cost(self.cart.cart.destination_address.city)
             context['must_pay'] = self.cart.shopping_shipping_total_cost()
             context['stripe_amount'] = self.cart.get_stripe_cost()
         return context
@@ -78,6 +79,8 @@ class ShippingAddresses(AddressListView):
 def charge(request):
     if request.method == 'POST':
         cart = _Cart(request)
+        #assert cart.cart.address is not None, "Destination address is not specified"
+
         charge = stripe.Charge.create(
             amount=cart.get_stripe_cost(),
             currency='usd',
