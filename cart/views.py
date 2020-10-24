@@ -69,7 +69,7 @@ class ShippingAddresses(AddressListView):
         if ship_address_id:
             ship_address_id = int(ship_address_id)
             self.cart.set_ship_address(ship_address_id)
-            context['ship_address'] = self.cart.cart.destination_address
+            context['ship_address'] = self.cart.get_ship_address()
             context['ship_cost'] = self.cart.ship_cost.get_city_cost(self.cart.cart.destination_address.city)
             context['must_pay'] = self.cart.shopping_shipping_total_cost()
             context['stripe_amount'] = self.cart.get_stripe_cost()
@@ -79,7 +79,7 @@ class ShippingAddresses(AddressListView):
 def charge(request):
     if request.method == 'POST':
         cart = _Cart(request)
-        #assert cart.cart.address is not None, "Destination address is not specified"
+        #TODO: handle if no destination address is set.
 
         charge = stripe.Charge.create(
             amount=cart.get_stripe_cost(),
@@ -97,9 +97,9 @@ def submitOrder(request, cart):
     new_order = Order.objects.create(
         user=request.user,
         net_sale_amount=cart.sum_total(),
-        shipping_amount=cart.shipping_costs.get_city_cost(),
+        shipping_amount=cart.get_shipping_cost(),
         total_paid=cart.shopping_shipping_total_cost(),
-        destination_address=cart.shipping_costs.address
+        destination_address=cart.get_ship_address()
     )
     return new_order
 

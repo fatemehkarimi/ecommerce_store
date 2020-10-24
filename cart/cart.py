@@ -39,6 +39,9 @@ class _Cart:
         self.cart.destination_address = UserAddress.objects.get(pk=address_id)
         self.cart.save()
 
+    def get_ship_address(self):
+        return self.cart.destination_address
+
     def get_items_list(self):
         return CartItem.objects.filter(cart=self.cart)
 
@@ -59,6 +62,7 @@ class _Cart:
         if item:
             item.delete()
 
+    # get shopping cost
     def sum_total(self):
         item_set = self.get_items_list()
         return item_set.aggregate(
@@ -67,11 +71,18 @@ class _Cart:
                 max_digits=10, decimal_places=0)
         )).get('total', 0)
 
+    # get shipping cost
+    def get_shipping_cost(self):
+        return self.ship_cost.get_city_cost(
+            self.cart.destination_address.city)
+
+    # get shopping + shipping costs
     def shopping_shipping_total_cost(self):
         shopping_cost = self.sum_total()
         shipping_cost = self.ship_cost.get_city_cost(
             self.cart.destination_address.city)
         return shopping_cost + shipping_cost
 
+    # get total costs in formatted for stipe
     def get_stripe_cost(self):
         return int(self.shopping_shipping_total_cost() * 100)
