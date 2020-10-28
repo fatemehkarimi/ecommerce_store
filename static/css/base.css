@@ -105,3 +105,7 @@ hr.hr-text {
     margin: auto;
     display: block;
 }
+
+.borderless td {
+    border: none;
+}

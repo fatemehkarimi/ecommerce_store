@@ -6,9 +6,32 @@
     <div class="row">
       <div class="col">
         <div class="card">
+          <div class="card-header">
+              Order Details
+          </div>
           <div class="card-body">
-            <h5 class="card-title">Shipping Address</h5>
-            {{ order.destination_address.adress }}
+            <table class="table borderless">
+              <tbody>
+                <tr>
+                  <td>Order Status</td>
+                  <td><p class="font-weight-bold">{{ order.get_order_status_display }}</p></td>
+                  <td>Order Date</td>
+                  <td><p class="font-weight-bold">{{ order.order_date }}</p></td>
+                </tr>
+                <tr>
+                  <td>Address
+                  </td>
+                  <td>
+                    <p class="font-weight-bold">{{ order.destination_address.city }},<br>
+                       {{ order.destination_address.adress }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Amount</td>
+                  <td><p class="font-weight-bold">{{ order.total_paid }}$</p></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
