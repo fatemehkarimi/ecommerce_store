@@ -35,7 +35,7 @@ class OrderItem(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def save(self, *args, **kwargs):
-        self.total_price = self.unit_price * self.unit_price
+        self.total_price = self.unit_price * self.count
         super(OrderItem, self).save(*args, **kwargs)
 
     def __str__(self):

@@ -27,14 +27,56 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Amount</td>
-                  <td><p class="font-weight-bold">{{ order.total_paid }}$</p></td>
+                  <td>Shopping Amount</td>
+                  <td><p class="font-weight-bold">{{ order.net_sale_amount }}$</p></td>
+                </tr>
+                <tr>
+                  <td>Shipping Amount</td>
+                  <td><p class="font-weight-bold">{{ order.shipping_amount }}$</p></td>
                 </tr>
               </tbody>
             </table>
+            <hr>
+            <h5 style="display:inline">Total Paid: </h5>
+            <h5 class="text-danger" style="display:inline">{{ order.total_paid }}</h5>
+            <h9 class="text-danger" style="display:inline">$</h9>
           </div>
         </div>
       </div>
     </div>
+    <br>
+    {% for itm in items %}
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <a class="text-decoration-none text-dark streched-link" href="{% url 'product_detail' itm.product.pk %}">{{ itm.product.product_name}}</a>
+            </div>
+            <div class="card-horizontal">
+              <div class="img-square-wrapper">
+                <img class="product-in-cart" src="{{ itm.product.product_img1.url }}">
+              </div>
+              <div class="card-body">
+                <p>
+                  <h5 style="display:inline">Price per unit: </h5>
+                  <h5 class="text-danger" style="display:inline">{{ itm.product.price_per_unit }}</h5>
+                  <h9 class="text-danger" style="display:inline">$</h9>
+                </p>
+                <p>
+                  <h5 style="display:inline">Count:</h5>
+                  <h5 class="text-danger" style="display:inline">{{ itm.count }}</h5>
+                </p>
+                <p>
+                  <h5 style="display:inline">Total: </h5>
+                  <h5 class="text-danger" style="display:inline">{{ itm.total_price }}</h5>
+                  <h9 class="text-danger" style="display:inline">$</h9>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    {% endfor %}
   </div>
 {% endblock profile_content %}
