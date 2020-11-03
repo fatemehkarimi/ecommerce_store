@@ -3,13 +3,45 @@
 {% block title %}Grocery{% endblock title %}
 
 {% block content %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <h4 class="text-center">This is an example website. orders are not tracked. avoid ordering items.</h4>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="container">
+    <div class="row">
+    {% for product in products %}
+      <div class="col-md-4">
+          <div class="card text-center">
+            <a href="{% url 'product_detail' product.pk %}"><img class="card-img-top" src="{{ product.product_img1.url }}"></a>
+              <div class="card-body">
+                <h7 class="card-title">
+                  <a href="{% url 'product_detail' product.pk %}" class="text-dark text-decoration-none">{{ product.product_name }}</a>
+                </h7>
+              </div>
+              <div class="card-footer">
+                <div class="float-center">
+                  <label href="#" class="text-dark">{{ product.price_per_unit }}$</label>
+                  <br>
+                  <form method="post" action="{% url 'add_item_to_cart' product.pk %}">
+                    {% csrf_token %}
+                    <button class="btn btn-success btn-block" type="submit">Add to the cart</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+          <br>
+        </div>
+    {% endfor %}
+    </div>
+  </div>
 {% endblock content %}
 
 {% block footer %}
 <footer class="bg-light text-left text-lg-left">
   <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.01);">
-    This is an example website. Orders are not Tracked
-    <a class="text-primary" style="text-decoration: none" href="{% url 'about' %}">Read more...</a>
+    <a class="text-primary" style="text-decoration: none" href="{% url 'about' %}">About Me</a>
   </div>
 </footer>
 {% endblock footer %}
