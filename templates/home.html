@@ -4,3 +4,12 @@
 
 {% block content %}
 {% endblock content %}
+
+{% block footer %}
+<footer class="bg-light text-left text-lg-left">
+  <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.01);">
+    This is an example website. Orders are not Tracked
+    <a class="text-primary" style="text-decoration: none" href="{% url 'about' %}">Read more...</a>
+  </div>
+</footer>
+{% endblock footer %}

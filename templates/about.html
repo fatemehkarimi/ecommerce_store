@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Hello! I'm Fatemeh Karimi{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body style="background-color: #f5e05f">
+  <header>
+  </header>
+  <br/>
+  <div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'images/about.jpg' %}" alt="My Image"></img>
+                <div class="card-body">
+                    <h4 class="card-title">Hi! I'm Fatemeh Karimi!</h4>
+                    <p class="card-text">
+                        I'm a software engineer from Iran. I studied computer engineering at Isfahan university of Technology.
+                        My interests are Python, C++, Algorithms and Web development. In the picture above I am the person in the middle.
+                    </p>
+                    <p class="card-text text-center">
+                        <a href="https://www.linkedin.com/in/fatemeh-karimi-86b466145/">
+                          <img class="social-account-logo" src="{% static 'images/linkedin_logo.svg' %}">
+                          </img>
+                        </a>
+                        <a href="https://github.com/fatemehkarimi">
+                          <img class="social-account-logo" src="{% static 'images/github_logo.svg' %}">
+                          </img>
+                        <a href="https://twitter.com/fatemehkarimi__">
+                          <img class="social-account-logo" src="{% static 'images/twitter_logo.svg' %}">
+                          </img>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
