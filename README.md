@@ -30,17 +30,17 @@ This is an Ecommerce store based on `Django 2.2` and `python 3.6`
     ```
     sudo docker build .
     ```
-1. migrate django project:
-
-    ```
-    sudo docker-compose exec web python3 manage.py migrate
-    ```
 1. run docker image:
 
     ```
     sudo docker-compose up -d
     ```
-1. Navigate to [localhost](http://localhost:8000) to see the homepage
+1. migrate django project:
+
+    ```
+    sudo docker-compose exec web python3 manage.py migrate
+    ```
+1. Navigate to [localhost](http://localhost:8000) to see the homepage.
 1. Admin dashboard is available at [localhost/admin](http://localhost:8000/admin). to access the dashboard, first create a superuser:
 
     ```
