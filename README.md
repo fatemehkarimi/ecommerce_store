@@ -12,6 +12,11 @@ This is an Ecommerce store based on `Django 2.2` and `python 3.6`
 * User favorite list
 * Saving user addresses
 
+## Screenshots
+![homepage](screenshots/homepage.png)
+
+![checkout](screenshots/checkout.png)
+
 ## Installation
 1. Clone the repository and navigate to the directory:
 
